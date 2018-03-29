@@ -11,4 +11,5 @@ yum install -y clamav clamav-update
 
 # configure a cron job to scan new files
 cd /etc.cron.hourly
-ln -s /opt/fastclamscan/fastclamscan```
+ln -s /opt/fastclamscan/fastclamscan
+```
