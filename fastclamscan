@@ -1,14 +1,14 @@
 #!/usr/bin/perl
 
 use strict;
-use FindBin qw($Bin);
+use FindBin qw($RealBin);
 
 if ($> != 0) {
   print "You must be root to run this command.\n";
   exit(-1);
 }
 
-chdir $Bin or die "could not chdir $Bin\n";
+chdir $RealBin or die "could not chdir $RealBin\n";
 
 # get excluded dirs
 my @EXCLUDE_DIR;
@@ -32,7 +32,7 @@ my @EXCLUDE_DIR;
     chomp;
     push @EXCLUDE_DIR, $_;
   }
-  push @EXCLUDE_DIR, $Bin;
+  push @EXCLUDE_DIR, $RealBin;
 }
 
 # update clam db
@@ -70,11 +70,11 @@ my $SCANLIST_FN = ".fastclamscan.lst";
 # run clamscan for file list
 { my $rv = system("clamscan", "--quiet", "--infected", "-f", $SCANLIST_FN, '-l', 'clamscan.log');
   if ($rv==1) {
-    my $msg = "clamav says virus found; see $Bin/clamscan.log";
+    my $msg = "clamav says virus found; see $RealBin/clamscan.log";
     print STDERR $msg;
     system("logger", $msg);
   } elsif ($rv != 0) {
-    my $msg = "clamav error code: $rv; see $Bin/clamscan.log";
+    my $msg = "clamav error code: $rv; see $RealBin/clamscan.log";
     print STDERR $msg;
     system("logger", $msg);
   }
